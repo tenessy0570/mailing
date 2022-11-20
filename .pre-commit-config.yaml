@@ -1,0 +1,20 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v2.3.0
+    hooks:
+      - id: check-yaml
+        stages: [ commit, push ]
+      - id: end-of-file-fixer
+        stages: [ commit, push ]
+      - id: trailing-whitespace
+        stages: [ commit, push ]
+      - id: flake8
+        stages: [ commit, push ]
+        args: [
+          "--ignore=F401,E501"
+        ]
+  - repo: https://github.com/asottile/reorder_python_imports
+    rev: v3.9.0
+    hooks:
+      - id: reorder-python-imports
+        stages: [ commit, push ]

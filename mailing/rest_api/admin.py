@@ -1,10 +1,10 @@
 from django.contrib import admin
 
-from mailing.rest_api.models import Client
-from mailing.rest_api.models import Mailing
-from mailing.rest_api.models import Message
+from .models import Client
+from .models import Mailing
+from .models import Message
 # Register your models here.
 
-admin.register(Client)
-admin.register(Mailing)
-admin.register(Message)
+admin.site.register(Client)
+admin.site.register(Mailing)
+admin.site.register(Message)

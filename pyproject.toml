@@ -11,6 +11,7 @@ djangorestframework = "^3.14.0"
 django-rest-swagger = "^2.2.0"
 python-dotenv = "^0.21.0"
 pre-commit = "^2.20.0"
+pytz = "^2022.6"
 
 [tool.poetry.dev-dependencies]
 

@@ -25,8 +25,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_api.app.RestApiConfig',
-    'scheduled_mailing.app.ScheduledMailingConfig',
+    'rest_api.apps.RestApiConfig',
+    'scheduled_mailing.apps.ScheduledMailingConfig',
 ]
 
 MIDDLEWARE = [

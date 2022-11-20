@@ -1,8 +1,8 @@
 from django.db import models
 
-from mailing.mailing.validators import is_digit
-from mailing.mailing.validators import tag_exists
-from mailing.mailing.validators import timezone_exists
+from mailing.rest_api.validators import is_digit
+from mailing.rest_api.validators import tag_exists
+from mailing.rest_api.validators import timezone_exists
 
 
 class Mailing(models.Model):

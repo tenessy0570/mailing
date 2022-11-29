@@ -4,14 +4,15 @@ from django.core.exceptions import ValidationError
 
 def timezone_exists(value):
     if value not in pytz.all_timezones:
-        raise ValidationError
+        raise ValidationError("This timezone doesn't exist")
 
 
 def is_digit(value: str):
     if not value.isdigit():
-        raise ValidationError
+        raise ValidationError("Value should be digit")
 
 
 def tag_exists(value):
-    if value not in ["subscriber", "buyer"]:
-        raise ValidationError
+    allowed_values = ["subscriber", "buyer"]
+    if value not in allowed_values:
+        raise ValidationError(f"Value is not allowed. List of allowed values: {allowed_values}")

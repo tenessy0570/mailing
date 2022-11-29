@@ -3,5 +3,6 @@ from . import views
 
 
 urlpatterns = [
-    path('client', views.ClientApiView.as_view(), name="client_endpoint"),
+    path('client', views.ClientCreateAPIView.as_view(), name="client_create"),
+    path('client/<int:pk>', views.ClientUpdateAPIView.as_view(), name="client_update")
 ]

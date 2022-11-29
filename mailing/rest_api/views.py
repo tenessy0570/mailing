@@ -1,10 +1,10 @@
+import loguru
 from rest_framework import status
-from rest_framework.exceptions import ValidationError
-from rest_framework.generics import CreateAPIView, UpdateAPIView, get_object_or_404
+from rest_framework.generics import CreateAPIView
+from rest_framework.generics import get_object_or_404
 from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import loguru
 
 from .models import Client
 from .serializers import ClientSerializer
@@ -25,7 +25,7 @@ class ClientCreateAPIView(CreateAPIView):
         return Response({"ok": "false", "error": client.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
-class ClientUpdateAPIView(APIView):
+class ClientUpdateAndDeleteAPIView(APIView):
     @staticmethod
     def patch(request: Request, pk: int):
         client_to_update = Client.objects.get(id=pk)
@@ -37,3 +37,11 @@ class ClientUpdateAPIView(APIView):
             return Response({"ok": True, "data": {**serialized.data}}, status=status.HTTP_201_CREATED)
 
         return Response({"ok": "false", "error": serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
+
+    @staticmethod
+    def delete(request: Request, pk: int):
+        client_to_delete: Client = get_object_or_404(Client, id=pk)
+        logger.info(f"Deleting client with id: {client_to_delete.pk}...")
+
+        client_to_delete.delete()
+        return Response({"ok": "true"}, status=status.HTTP_200_OK)

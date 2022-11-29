@@ -6,7 +6,6 @@ from .validators import timezone_exists
 
 
 class Mailing(models.Model):
-    id = models.IntegerField("id", primary_key=True)
     text = models.TextField("text", null=False, blank=False)
     datetime_start = models.DateTimeField(
         "Date and time of mailing start",
@@ -27,7 +26,6 @@ class Mailing(models.Model):
 
 
 class Client(models.Model):
-    id = models.IntegerField("id", primary_key=True)
     tag = models.CharField(
         null=False,
         blank=True,
@@ -59,7 +57,6 @@ class Client(models.Model):
 
 
 class Message(models.Model):
-    id = models.IntegerField("id", primary_key=True)
     created_at = models.DateTimeField(auto_created=True, auto_now_add=True, null=False, blank=True)
     status = models.CharField(null=False, blank=False, max_length=255)
 

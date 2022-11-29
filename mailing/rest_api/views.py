@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from .models import Client
-from .serializers import ClientSerializer
+from .serializers import ClientSerializer, MailingSerializer
 
 logger = loguru.logger
 
@@ -15,14 +15,14 @@ logger = loguru.logger
 class ClientCreateAPIView(CreateAPIView):
     @staticmethod
     def post(request: Request, *args, **kwargs):
-        client = ClientSerializer(data=request.data)
+        serialized = ClientSerializer(data=request.data)
 
-        if client.is_valid():
-            client.save()
-            logger.info(f"Created client: {client}")
-            return Response({"ok": True, "data": {**client.data}}, status=status.HTTP_201_CREATED)
+        if serialized.is_valid():
+            serialized.save()
+            logger.info(f"Created client: {serialized}")
+            return Response({"ok": True, "data": {**serialized.data}}, status=status.HTTP_201_CREATED)
 
-        return Response({"ok": "false", "error": client.errors}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"ok": "false", "error": serialized.errors}, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ClientUpdateAndDeleteAPIView(APIView):
@@ -45,3 +45,18 @@ class ClientUpdateAndDeleteAPIView(APIView):
 
         client_to_delete.delete()
         return Response({"ok": "true"}, status=status.HTTP_200_OK)
+
+
+class MailingCreateAPIView(APIView):
+    @staticmethod
+    def post(request: Request):
+        serialized = MailingSerializer(data=request.data)
+
+        if serialized.is_valid():
+            serialized.save()
+            logger.info(f"Created mailing: {serialized}")
+
+            # TODO: scheduled_mailing.append_new_mailing(serialized)
+            return Response({"ok": True, "data": {**serialized.data}}, status=status.HTTP_201_CREATED)
+
+        return Response({"ok": "false", "error": serialized.errors}, status=status.HTTP_400_BAD_REQUEST)

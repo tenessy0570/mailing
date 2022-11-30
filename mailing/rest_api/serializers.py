@@ -18,6 +18,9 @@ class ClientSerializer(serializers.ModelSerializer):
 
 
 class MessageSerializer(serializers.ModelSerializer):
+    client = ClientSerializer(many=False, read_only=True)
+    mailing = MailingSerializer(many=False, read_only=True)
+
     class Meta:
         model = Message
-        fields = ("id", "created_at", "status", "client_id", "mailing_id")
+        fields = ("id", "created_at", "status", "client", "mailing")

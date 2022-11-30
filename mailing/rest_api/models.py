@@ -61,5 +61,5 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_created=True, auto_now_add=True, null=False, blank=True)
     status = models.CharField(null=False, blank=False, max_length=255)
 
-    client_id = models.ForeignKey(Client, on_delete=models.CASCADE)
-    mailing_id = models.ForeignKey(Mailing, on_delete=models.CASCADE)
+    client = models.ForeignKey(Client, on_delete=models.CASCADE)
+    mailing = models.ForeignKey(Mailing, on_delete=models.CASCADE)

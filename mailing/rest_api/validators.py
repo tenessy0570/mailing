@@ -12,6 +12,11 @@ def is_digit(value: str):
         raise ValidationError("Value should be digit")
 
 
+def is_a_phone_number(value: str):
+    if value[0] != "7":
+        raise ValidationError("Phone number should start with 7")
+
+
 def tag_exists(value):
     allowed_values = ["subscriber", "buyer"]
     if value not in allowed_values:

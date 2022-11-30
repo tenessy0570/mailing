@@ -3,6 +3,7 @@ from django.db import models
 from .validators import is_digit
 from .validators import tag_exists
 from .validators import timezone_exists
+from .validators import is_a_phone_number
 
 
 class Mailing(models.Model):
@@ -37,7 +38,7 @@ class Client(models.Model):
         max_length=11,
         null=False,
         blank=False,
-        validators=[is_digit]
+        validators=[is_digit, is_a_phone_number]
     )
     mobile_operator_code = models.CharField(
         max_length=255,

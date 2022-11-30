@@ -6,10 +6,12 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Client, Message
+from .models import Client
 from .models import Mailing
-from .serializers import ClientSerializer, MessageSerializer
+from .models import Message
+from .serializers import ClientSerializer
 from .serializers import MailingSerializer
+from .serializers import MessageSerializer
 
 logger = loguru.logger
 

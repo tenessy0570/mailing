@@ -1,9 +1,9 @@
 from django.db import models
 
+from .validators import is_a_phone_number
 from .validators import is_digit
 from .validators import tag_exists
 from .validators import timezone_exists
-from .validators import is_a_phone_number
 
 
 class Mailing(models.Model):

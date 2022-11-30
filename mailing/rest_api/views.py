@@ -6,9 +6,9 @@ from rest_framework.request import Request
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Client
+from .models import Client, Message
 from .models import Mailing
-from .serializers import ClientSerializer
+from .serializers import ClientSerializer, MessageSerializer
 from .serializers import MailingSerializer
 
 logger = loguru.logger
@@ -86,3 +86,12 @@ class MailingUpdateAndDeleteAPIView(APIView):
 
         # TODO: scheduled_mailing.delete_existing_mailing(mailing_to_delete)
         return Response({"ok": "true"}, status=status.HTTP_200_OK)
+
+
+class MailingSentMessagesListAPIView(APIView):
+    @staticmethod
+    def get(request: Request, pk: int):
+        messages = Message.objects.filter(mailing_id=pk)
+        serialized = MessageSerializer(messages, many=True)
+
+        return Response({"ok": True, "data": (data for data in serialized.data)}, status=status.HTTP_200_OK)

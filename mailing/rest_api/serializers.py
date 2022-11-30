@@ -6,9 +6,11 @@ from .models import Message
 
 
 class MailingSerializer(serializers.ModelSerializer):
+    messages = serializers.IntegerField(read_only=True, required=False)
+
     class Meta:
         model = Mailing
-        fields = ("id", "text", "datetime_start", "datetime_end", "client_tag")
+        fields = ("id", "text", "datetime_start", "datetime_end", "client_tag", "messages")
 
 
 class ClientSerializer(serializers.ModelSerializer):

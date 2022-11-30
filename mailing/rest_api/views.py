@@ -99,7 +99,34 @@ class MailingSentMessagesListAPIView(APIView):
         return Response({"ok": True, "data": (data for data in serialized.data)}, status=status.HTTP_200_OK)
 
 
-# class StatisticsAboutSentMessagesAPIView(APIView):
-#     @staticmethod
-#     def get(request: Request):
-#
+class StatisticsAboutSentMessagesAPIView(APIView):
+    @staticmethod
+    def get(request: Request):
+        mailings = Mailing.objects.all()
+        messages = Message.objects.all().select_related('mailing')  # Avoid 1000 queries in loop below
+
+        list_of_mailings_with_messages_statistic = []
+
+        # Cringe method, I know
+        for mailing in mailings:
+            success_messages_count = 0
+            failed_messages_count = 0
+
+            for message in messages:
+                if message.mailing.id != mailing.id:
+                    continue
+
+                success_messages_count += int(message.status == "success")
+                failed_messages_count += int(message.status == "failed")
+
+            serialized = MailingSerializer(mailing)
+            mailing_with_messages_stats = {
+                **serialized.data,
+                "messages": {
+                    "success": success_messages_count,
+                    "failed": failed_messages_count
+                }
+            }
+            list_of_mailings_with_messages_statistic.append(mailing_with_messages_stats)
+
+        return Response({"ok": True, "data": list_of_mailings_with_messages_statistic})

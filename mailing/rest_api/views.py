@@ -93,7 +93,7 @@ class MailingUpdateAndDeleteAPIView(APIView):
 class MailingSentMessagesListAPIView(APIView):
     @staticmethod
     def get(request: Request, pk: int):
-        messages = Message.objects.filter(mailing_id=pk).select_related('client')
+        messages = Message.objects.filter(mailing_id=pk)
         serialized = MessageSerializer(messages, many=True)
 
         return Response({"ok": True, "data": (data for data in serialized.data)}, status=status.HTTP_200_OK)
